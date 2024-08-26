@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('sys_users_rols', function (Blueprint $table) {
             $table->id();
+            $table->integer('_user');
+            $table->integer('_rol');
             $table->timestamps();
+
+            $table->foreign('_user')->references('id')->on('sys_users')->onDelete('cascade');
+            $table->foreign('_rol')->references('id')->on('sys_rols')->onDelete('cascade');
+
+            $table->primary(['_user', '_rol']);
         });
     }
 

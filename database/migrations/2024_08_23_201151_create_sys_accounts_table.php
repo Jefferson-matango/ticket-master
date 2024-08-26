@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('logo')->nullable();
-            $table->boolean('delete')->default(false);
+            $table->tinyInteger('delete')->unsigned();
             $table->softDeletes();
             $table->timestamps();
             $table->integer('created_by')->nullable();

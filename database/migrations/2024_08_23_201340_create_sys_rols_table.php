@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('sys_rols', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->text('description');
+            $table->enum('state', ['active', 'inactive']);
             $table->timestamps();
+            $table->tinyInteger('delete')->unsigned();
+            $table->softDeletes();
+            $table->integer('created_by');
+            $table->integer('modified_by');
         });
     }
 

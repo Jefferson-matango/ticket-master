@@ -26,10 +26,12 @@ return new class extends Migration
             $table->string('api_certificades')->nullable();
             $table->string('api_complaints_suggestions')->nullable();
             $table->timestamps();
-            $table->boolean('delete')->default(false);
+            $table->tinyInteger('delete')->unsigned();
+            $table->integer('created_by');
+            $table->integer('modified_by');
             $table->softDeletes();
 
-            $table->foreign('_account')->references('id')->on('sys_accounts');
+            $table->foreign('_account')->references('id')->on('sys_accounts')->onDelete('cascade');
         });
     }
 

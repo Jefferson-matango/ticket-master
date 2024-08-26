@@ -11,16 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('sys_users', function (Blueprint $table) {
             $table->id();
-            $table->string('username');
-            $table->string('identification');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
+            $table->integer('_branch')->nullable();
+            $table->string('username')->nullable();
+            $table->string('identification')->nullable();
+            $table->string('name')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('phone')->nullable();
+            $table->enum('state', ['active', 'inactive'])->nullable();
+            $table->string('password')->nullable();
+            $table->tinyInteger('delete')->unsigned()->nullable();
+            $table->softDeletes();
             $table->timestamps();
+            $table->integer('created_by')->nullable();
+            $table->integer('modified_by')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->rememberToken();
+
+            $table->foreign('_branch')->references('id')->on('sys_branches')->onDelete('cascade');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -44,7 +53,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('sys_users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }
