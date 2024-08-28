@@ -20,18 +20,21 @@ return new class extends Migration
             $table->text('contact_people');
             $table->string('phone');
             $table->string('email');
-            $table->string('logo')->nullable();
-            $table->string('api_local')->nullable();
-            $table->string('api_server')->nullable();
-            $table->string('api_certificades')->nullable();
-            $table->string('api_complaints_suggestions')->nullable();
+            $table->string('logo');
+            $table->string('api_local');
+            $table->string('api_server');
+            $table->string('api_certificades');
+            $table->string('api_complaints_suggestions');
             $table->timestamps();
-            $table->tinyInteger('delete')->unsigned();
-            $table->integer('created_by');
-            $table->integer('modified_by');
+            $table->tinyInteger('delete')->unsigned()->default(0);
+            $table->integer('_created_by');
+            $table->integer('_modified_by')->nullable();
             $table->softDeletes();
 
             $table->foreign('_account')->references('id')->on('sys_accounts')->onDelete('cascade');
+
+            $table->foreign('_created_by')->references('id')->on('sys_users')->onDelete('cascade');
+            $table->foreign('_modified_by')->references('id')->on('sys_users')->onDelete('cascade');
         });
     }
 

@@ -14,12 +14,15 @@ return new class extends Migration
         Schema::create('sys_accounts', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('logo')->nullable();
-            $table->tinyInteger('delete')->unsigned();
+            $table->string('logo');
+            $table->tinyInteger('delete')->unsigned()->default(0);
             $table->softDeletes();
             $table->timestamps();
-            $table->integer('created_by')->nullable();
-            $table->integer('modified_by')->nullable();
+            $table->integer('_created_by');
+            $table->integer('_modified_by')->nullable();
+
+            $table->foreign('_created_by')->references('id')->on('sys_users')->onDelete('cascade');
+            $table->foreign('_modified_by')->references('id')->on('sys_users')->onDelete('cascade');
         });
     }
 

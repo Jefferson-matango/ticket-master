@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('_user');
             $table->integer('_rol');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('_user')->references('id')->on('sys_users')->onDelete('cascade');

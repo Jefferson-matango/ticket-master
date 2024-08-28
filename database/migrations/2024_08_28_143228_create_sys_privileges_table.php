@@ -23,10 +23,13 @@ return new class extends Migration
             $table->enum('view', array_column(Privileges::cases(), 'value'));
             $table->enum('export', ['todo', 'nada']);
             $table->timestamps();
-            $table->tinyInteger('delete')->unsigned();
+            $table->tinyInteger('delete')->unsigned()->default(0);
             $table->softDeletes();
-            $table->integer('created_by');
-            $table->integer('modified_by');
+            $table->integer('_created_by');
+            $table->integer('_modified_by')->nullable();
+
+            $table->foreign('_created_by')->references('id')->on('sys_users')->onDelete('cascade');
+            $table->foreign('_modified_by')->references('id')->on('sys_users')->onDelete('cascade');
         });
     }
 

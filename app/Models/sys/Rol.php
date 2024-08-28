@@ -2,10 +2,12 @@
 
 namespace App\Models\sys;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
+use App\Models\User;
 
 class Rol extends Model
 {
@@ -28,5 +30,12 @@ class Rol extends Model
 
     public function rols(): BelongsToMany {
         return $this->belongsToMany(User::class, 'sys_users_rols', '_rol', '_user');
+    }
+
+    public function createdByRol(): HasOne {
+        return $this->hasOne(User::class, '_created_by', 'id');
+    }
+    public function modifiedByRol(): HasOne {
+        return $this->hasOne(User::class, '_modified_by', 'id');
     }
 }

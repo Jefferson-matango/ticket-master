@@ -16,6 +16,7 @@ return new class extends Migration
             $table->integer('_rol');
             $table->integer('_privilege');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('_rol')->references('id')->on('sys_rols')->onDelete('cascade');
             $table->foreign('_privilege')->references('id')->on('sys_privileges')->onDelete('cascade');
